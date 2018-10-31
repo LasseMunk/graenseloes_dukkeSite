@@ -116,7 +116,8 @@ udpPort.on("ready", function () {
 
 udpPort.on("message", function (oscMessage) {
     console.log(oscMessage);
-    
+    console.log(clientIds);
+
     if (oscMessage.args[0] == 0) {
         io.sockets.emit("message", oscMessage);   // send to all
     };

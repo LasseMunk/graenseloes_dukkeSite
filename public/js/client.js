@@ -1,6 +1,16 @@
 var socket = io();	
-    socket.on('message', oscMessage);
-     	
+		socket.on('message', oscMessage);
+		
+function sendMom() {
+	// openFullscreen();
+	show_image('/img/gGif_4_1.gif', 434, 715, 'img1');
+}		
+		
+function sendDad() {
+	// openFullscreen();
+	show_image('/img/gGif_4_2.gif', 434, 715, 'img2');		 
+}			
+
 function oscMessage(data) {	 
 
 	if (data.args[1] == 'reload'){			 
@@ -19,13 +29,11 @@ function oscMessage(data) {
 
 function show_image(src, width, height, alt) {
 	
-	var deleteOld = document.getElementById('face');
+	var deleteOld = document.getElementById('face');	
+	deleteOld.parentNode.removeChild(deleteOld);
 		
-			deleteOld.parentNode.removeChild(deleteOld);
-		
-
-	console.log(src);	
 	var img = document.createElement("img");
+	console.log(src);
 	img.src = src;
 	img.width = width;
 	img.height = height;
@@ -34,4 +42,23 @@ function show_image(src, width, height, alt) {
 	document.body.appendChild(img);
 }
 
+function openFullscreen() {
+	/* Get the element you want displayed in fullscreen 
+	mode (a video in this example): */
+	var elem = document.getElementById("content"); 
+
+	/* When the openFullscreen() function is executed, open the video in fullscreen.
+	Note that we must include prefixes for different browsers,
+	as they don't support the requestFullscreen method yet */
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+}
 
