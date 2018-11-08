@@ -2,7 +2,7 @@ var socket = io();
 		socket.on('message', oscMessage);
 		
 function sendMom() {
-	// openFullscreen();
+ //	openFullscreen();
 	show_image('/img/gGif_4_1.gif', 434, 715, 'img1');
 }		
 		
@@ -43,22 +43,25 @@ function show_image(src, width, height, alt) {
 }
 
 function openFullscreen() {
+
+// https://developers.google.com/web/fundamentals/native-hardware/fullscreen/
+
 	/* Get the element you want displayed in fullscreen 
 	mode (a video in this example): */
-	var elem = document.getElementById("content"); 
+	var elem = document.getElementById("bdy"); 
 
 	/* When the openFullscreen() function is executed, open the video in fullscreen.
 	Note that we must include prefixes for different browsers,
 	as they don't support the requestFullscreen method yet */
 
   if (elem.requestFullscreen) {
-    elem.requestFullscreen();
+    document.body.requestFullscreen();
   } else if (elem.mozRequestFullScreen) { /* Firefox */
-    elem.mozRequestFullScreen();
+    document.body.requestFullscreen();
   } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    elem.webkitRequestFullscreen();
+    document.body.requestFullscreen();
   } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    elem.msRequestFullscreen();
+    document.body.requestFullscreen();
   }
 }
 
