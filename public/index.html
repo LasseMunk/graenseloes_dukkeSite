@@ -1,24 +1,73 @@
 <!doctype html>
 <html>
-    <head>
-        <title>Slut Starut</title>		
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta charset="UTF-8">
-        <meta name="description" content="Slut Starut"/>
-        <meta name="author" content="Lasse Munk"/>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-        <script type="text/javascript" src="/js/client.js"></script> 
-    </head>
+<head>
+    <title>Slut Starut</title>		
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta charset="UTF-8">
+    <meta name="description" content="Slut Starut"/>
+    <meta name="author" content="Lasse Munk"/>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/js/client.js"></script> 
+</head>
 
-    <body id="bdy"> 
-        
-            <div class="startDiv" id='face'>
-                <button type="button" class="button" onclick="sendMom()">MOM client</button>
-                <button type="button" class="button" onclick="sendDad()">DAD client</button>
-            </div>
-        
+<body id="bdy"> 
+    
+    
+    <div class="startDiv" id='character_selector'>
+        <button type="button" class="button" onclick="iAm('mom')">MOM client</button>
+        <button type="button" class="button" onclick="iAm('dad')">DAD client</button>
+    </div>
+    
+        <!-- 
+            script der måler window size
+        <script>
+                window.onresize = displayWindowSize;
+                window.onload = displayWindowSize;
+                
+                function displayWindowSize() {
+                    myWidth = window.innerWidth;
+                    myHeight = window.innerHeight;
+                    // your size calculation code here
+                    document.getElementById("wSize").innerHTML = myWidth + "x" + myHeight;
+                };
+            </script> -->
 
-    </body>
+    <table>
+        <tr>
+            <td id="vid_up">
+
+                <video  width="1600" height="1280" preload="auto" 
+                        style="display: none" id="vidUp_1" 
+                        src="video/_uppercomp.mp4" loop muted>                                               
+                </video>
+
+                <video  width="1600" height="1280" preload="auto" 
+                        style="display: none" id="vidUp_2" 
+                        src="video/_uppercomp.mp4" type="video/mp4" 
+                        loop muted>     
+                </video>
+
+            </td>
+        </tr>
+        <tr>
+            <td id="vid_down">
+
+                <video  width="1600" height="1280" preload="auto" 
+                        style="display: none" id="vidDown_1"
+                        src="video/_lowercomp.mp4" type="video/mp4"  
+                        loop muted>                                                      
+                </video>
+
+                <video  width="1600" height="1280" preload="auto" 
+                        style="display: none" id="vidDown_2" 
+                        src="video/_lowercomp.mp4" type="video/mp4" 
+                        loop muted>                                                
+                </video>
+
+            </td>
+        </tr>
+    </table>
+</body>
 </html>

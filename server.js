@@ -7,26 +7,11 @@ var app = express();						// express is a function call which create an
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-io.on('connection', function(client){
-      clientConnect(client); // call function when client is connecting
-
-  client.on('event', function(data){
-      // add event logic
-  });
-  
-  client.on('disconnect', function(){
-      clientDisconnect(client); // call function when client is disconnecting
-  });
-});
-
-
 http.listen(3000, function(){				// begins a server which listens on port 3000
   console.log('listening on *:3000');
 });
 
-// use node.js to run the server, in terminal: cd ..\to-directory node server.js
-// http://localhost:3000
-// or specify the ip-adress of the host computer
+
 
 app.use(express.static('public')); 	// serve the static files found in the 'public' folder
 
@@ -39,6 +24,21 @@ var clientIds = []; // array which takes care of connected IDs
 /* ---------------------------------------------
 	generate client side files from src folder
    -------------------------------------------- */ 
+io.on('connection', function(client){
+    clientConnect(client); // call function when client is connecting
+
+client.on('event', function(data){
+    // add event logic
+});
+
+client.on('disconnect', function(){
+    clientDisconnect(client); // call function when client is disconnecting
+    });
+});
+
+io.on('characterIs', function msg() {
+console.log('im character serverside');
+});
 
 function clientConnect(socket) {
 
@@ -51,14 +51,10 @@ function clientConnect(socket) {
 			// Add a reference to the socket.io library in the index.html
 			// Write the socket.io code in the UI (or what-ever js). 
 
-
-	// console.log(socket); // if you .log the variable socket, you get a lot of metadata.
-
-	//console.log("newConnection: " + socket.id); // show the new user id
-    
     clientIds.push(socket.id);
     console.log ("connected, clients array: " + clientIds);
-    sendClientLength(clientIds.length); // send the length of the new array to MAX
+
+    io.sockets.connected[socket.id].emit('yourHash', socket.id);  
 }
 
 function clientDisconnect (socket) {
@@ -67,7 +63,7 @@ function clientDisconnect (socket) {
     clientIds.splice(i, 1); // delete socket.id from clientIds array
     
     console.log ("disconnected, clients array: " + clientIds);
-    sendClientLength(clientIds.length); // send the length of the new array to MAX
+    
 }
 
 /****************
@@ -116,7 +112,6 @@ udpPort.on("ready", function () {
 
 udpPort.on("message", function (oscMessage) {
     console.log(oscMessage);
-    console.log(clientIds);
 
     if (oscMessage.args[0] == 0) {
         io.sockets.emit("message", oscMessage);   // send to all
@@ -134,17 +129,6 @@ udpPort.on("error", function (err) {
 });
 
 udpPort.open();
-
-function sendClientLength(length) {     // send to MAX
-
-    var msg = {
-        address: "/clientArrayLength",  // OSC namespace
-        args: [length]                  // OSC argument
-    };
-
-    udpPort.send(msg);                  // send OSC mesasge
-};
-
 
 /****************
  * OSC THE END  *

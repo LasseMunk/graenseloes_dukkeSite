@@ -1,45 +1,109 @@
 var socket = io();	
 		socket.on('message', oscMessage);
-		
-function sendMom() {
- //	openFullscreen();
-	show_image('/img/gGif_4_1.gif', 434, 715, 'img1');
+		socket.on('yourHash', setMyHash);
+
+// Objects
+var prevVideo = {
+	up: 1,
+	down: 1
 }		
-		
-function sendDad() {
-	// openFullscreen();
-	show_image('/img/gGif_4_2.gif', 434, 715, 'img2');		 
-}			
 
-function oscMessage(data) {	 
-
-	if (data.args[1] == 'reload'){			 
-        location.reload(true); 
-		}
-	
-	if (data.args[1] == 'img1'){		 
-
-		show_image('/img/gGif_4_1.gif', 434, 715, 'img1');
-
-  	}
-	if (data.args[1] == 'img2'){
-		show_image('/img/gGif_4_2.gif', 434, 715, 'img2');		 
-	}	
+var myInfo = {
+	hash: 'hash_placeHolder',
+	character: 'character_placeHolder'
 }
 
-function show_image(src, width, height, alt) {
+
+function oscMessage(data) {	 
+	if (data.args[1] == 'reload'){			 
+			location.reload(true); 
+		}
+	if (data.args[1] == 'yourHash'){			 
+			myInfo.hash = data.args[2]; 
+		}
 	
-	var deleteOld = document.getElementById('face');	
-	deleteOld.parentNode.removeChild(deleteOld);
-		
-	var img = document.createElement("img");
-	console.log(src);
-	img.src = src;
-	img.width = width;
-	img.height = height;
-	img.alt = alt;
-	img.id = 'face';
-	document.body.appendChild(img);
+	if (data.args[1] == 'up' || data.args[1] == 'down'){		 
+			changeVideo(data.args[1], data.args[2]);
+  	}
+}
+
+function iAm(who) {
+	var character = document.getElementById("character_selector");
+	character.style.display = "none";
+	myInfo.character = who;
+
+	if(who == 'mom') {
+		initVideo();
+	}
+	if(who == 'dad') {
+
+	}
+	//	openFullscreen();
+
+	console.log("character set: " + myInfo.character);
+
+	sendMyInfoToServer();
+}		
+
+function setMyHash(data) {
+	myInfo.hash = data;
+	console.log("hash set: " + myInfo.hash);
+	socket.emit('characterIs', myInfo.character, myInfo.hash);
+}
+
+function sendMyInfoToServer() {
+	console.log("send character: " + myInfo.character + " hash: " + myInfo.hash);
+}
+
+
+function initVideo() {
+	videoContainerUp = document.getElementById("vidUp_1");
+	videoContainerDown = document.getElementById("vidDown_1");
+
+	videoContainerUp.style.display = "block";
+	videoContainerDown.style.display = "block";
+
+	videoContainerUp.play();
+	videoContainerDown.play();
+
+}
+
+function changeVideo(upDown, videoName) { // implement nextVideo
+	
+	var newVideo = 'video/'+videoName+'.mp4';
+
+	if(upDown == 'up') {
+		if(prevVideo.up = 1) {
+			prevVideo.up = 2;
+
+			var videoContainer = document.getElementById("vidUp_2");
+			var videoContainer2 = document.getElementById("vidUp_2");
+
+			videoContainer.style.display = "block";
+			videoContainer.src = newVideo;
+			videoContainer.play();
+
+			// pause and hide other videoContainer
+			videoContainer2 = document.getElementById("vidUp_1");
+			videoContainer2.pause();
+			videoContainer2.style.display = "none";
+		}
+
+		if(prevVideo.up = 2) {
+			prevVideo.up = 1;
+			
+			var videoContainer = document.getElementById("vidUp_1");
+			var videoContainer2 = document.getElementById("vidUp_2");
+
+			videoContainer.style.display = "block";
+			videoContainer.src = newVideo;
+			videoContainer.play();
+
+			// pause and hide other videoContainer
+			videoContainer2.pause();
+			videoContainer2.style.display = "none";
+		}
+	}	
 }
 
 function openFullscreen() {
