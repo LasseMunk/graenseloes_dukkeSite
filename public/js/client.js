@@ -11,6 +11,7 @@ var prevVideo = {
 var myInfo = {
 	hash: 'hash_placeHolder',
 	character: 'character_placeHolder'
+
 }
 
 
