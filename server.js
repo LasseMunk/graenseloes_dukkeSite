@@ -11,8 +11,6 @@ http.listen(3000, function(){				// begins a server which listens on port 3000
   console.log('listening on *:3000');
 });
 
-
-
 app.use(express.static('public')); 	// serve the static files found in the 'public' folder
 
 // javascript is eventbased. Examples of events of the io socket is 
@@ -20,6 +18,11 @@ app.use(express.static('public')); 	// serve the static files found in the 'publ
 
 
 var clientIds = []; // array which takes care of connected IDs
+
+var characterHashes = {
+    mom: 'hash_placeholder',
+    dad: 'hash_placeholder'
+};
 
 /* ---------------------------------------------
 	generate client side files from src folder
@@ -34,10 +37,16 @@ client.on('event', function(data){
 client.on('disconnect', function(){
     clientDisconnect(client); // call function when client is disconnecting
     });
-});
-
-io.on('characterIs', function msg() {
-console.log('im character serverside');
+client.on('characterIs', function(data) { 
+    // receiving 'i am this character' from client
+    
+        if(data.character == 'mom') {
+            characterHashes.mom = data.hash;
+        };
+        if(data.character == 'dad') {
+            characterHashes.dad = data.hash;
+        };
+    });
 });
 
 function clientConnect(socket) {
@@ -70,7 +79,7 @@ function clientDisconnect (socket) {
  * OSC Over UDP *
  ****************/
 
-// When sending OSC from Max --> server, use /your-osc-message to avoid errors
+// When sending OSC, use /your-osc-message to avoid errors
 
 var osc = require("osc");
 
@@ -113,15 +122,23 @@ udpPort.on("ready", function () {
 udpPort.on("message", function (oscMessage) {
     console.log(oscMessage);
 
-    if (oscMessage.args[0] == 0) {
+    /* 
+        /whichCharacter upOrDown play preLoadNextVideo
+    */
+
+    if (oscMessage.address == '/all') {
+        
         io.sockets.emit("message", oscMessage);   // send to all
     };
 
-    if  (oscMessage.args[0] > 0) {                // send to specific client
-        
-        var clientIndex = oscMessage.args[0] - 1; // since array index begins from 0
-        io.sockets.connected[clientIds[clientIndex]].emit('message', oscMessage);  
-    };
+    if(oscMessage.address == '/mom') {
+        console.log(characterHashes.mom);
+        io.sockets.connected[characterHashes.mom].emit('message', oscMessage);  
+    }
+    if(oscMessage.address == '/dad') {
+        io.sockets.connected[characterHashes.dad].emit('message', oscMessage);  
+    }
+    
 });
 
 udpPort.on("error", function (err) {
