@@ -6,6 +6,7 @@ var express = require('express'); 			// import express
 var app = express();						// express is a function call which create an
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var osc = require("osc");
 
 http.listen(3000, function(){				// begins a server which listens on port 3000
   console.log('listening on *:3000');
@@ -81,7 +82,7 @@ function clientDisconnect (socket) {
 
 // When sending OSC, use /your-osc-message to avoid errors
 
-var osc = require("osc");
+
 
 var getIPAddresses = function () {
     var os = require("os"),
@@ -127,16 +128,25 @@ udpPort.on("message", function (oscMessage) {
     */
 
     if (oscMessage.address == '/all') {
-        
         io.sockets.emit("message", oscMessage);   // send to all
     };
 
     if(oscMessage.address == '/mom') {
-        console.log(characterHashes.mom);
-        io.sockets.connected[characterHashes.mom].emit('message', oscMessage);  
+        if(typeof characterHashes.mom === "undefined" ) {
+            console.log('mom is undefined');
+        }
+        else {
+
+            io.sockets.connected[characterHashes.mom].emit('message', oscMessage);  
+        }
     }
     if(oscMessage.address == '/dad') {
-        io.sockets.connected[characterHashes.dad].emit('message', oscMessage);  
+        if(typeof characterHashes.dad === "undefined" ) {
+            console.log('dad is undefined')
+        }
+        else {
+            io.sockets.connected[characterHashes.dad].emit('message', oscMessage);  
+        }
     }
     
 });

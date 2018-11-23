@@ -1,5 +1,5 @@
-/video
-/img
+**/video
+**/img
 /node_modules
 *.mp4
 **.gif

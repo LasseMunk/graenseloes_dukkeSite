@@ -69,18 +69,18 @@ function initVideo(character) {
 	videoContainerDown1.style.display = "block";
 
 	if(character == 'mom') {
-		videoContainerUp1.src = 'video/__init_mom_up.mp4';
-		videoContainerDown1.src = 'video/__init_mom_down.mp4';
+		videoContainerUp1.src = 'video/mom/mor_intro_up.mp4';
+		videoContainerDown1.src = 'video/mom/mor_intro_down.mp4';
 
-		videoContainerUp2.src = 'video/_lowercomp.mp4';
-		videoContainerDown2.src = 'video/_uppercomp.mp4';
+		videoContainerUp2.src = 'video/mom/mor_intro_up.mp4';
+		videoContainerDown2.src = 'video/mom/mor_intro_down.mp4';
 	}
 	if(character == 'dad') {
-		videoContainerUp1.src = 'video/__init_dad_up.mp4';
-		videoContainerDown1.src = 'video/__init_dad_down.mp4';
+		videoContainerUp1.src = 'video/dad/far_intro_up.mp4';
+		videoContainerDown1.src = 'video/dad/far_intro_down.mp4';
 
-		videoContainerUp2.src = 'video/_lowercomp.mp4';
-		videoContainerDown2.src = 'video/_uppercomp.mp4';
+		videoContainerUp2.src = 'video/dad/far_intro_up.mp4';
+		videoContainerDown2.src = 'video/dad/far_intro_up.mp4';
 	}
 
 	videoContainerUp1.play();
@@ -88,12 +88,21 @@ function initVideo(character) {
 
 }
 
+function snapchatOverlay(character) {
+	// how the hell ?
+}
+
 function changeVideo(upDown, videoName) {
 
 
 	// https://developers.google.com/web/updates/2017/06/play-request-was-interrupted
 	
-	var newVideo = 'video/'+videoName+'.mp4';
+	if(myInfo.character == 'mom') {
+		var newVideo = 'video/mom/'+videoName+'.mp4';
+	}
+	if(myInfo.character == 'dad') {
+		var newVideo = 'video/dad/'+videoName+'.mp4';
+	}
 
 	if(upDown == 'up') {
 		if(prevVideo.up = 1) {
@@ -161,6 +170,7 @@ function changeVideo(upDown, videoName) {
 			videoContainer2.style.display = "none";
 
 			videoContainer1.play();
+			
 			
 			// new source in video container 1
 			videoContainer2.src = newVideo;

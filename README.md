@@ -40,4 +40,22 @@ This makes safe use of microstepping.
 
 If only fullstep mode, then one could set Vref for 2v to get more torque. 
 
+Motor pins: 
+1   BLACK   A
+2   GREEN   A\
+3   RED     B   
+4   BLUE    B\    
 
+
+# A4988 Controller board pins
+
+https://www.youtube.com/watch?v=0qwrnUeSpYQ
+
+Go to 40:00 in video for explanation
+
+Tie RESET and SLEEP for always on
+
+# Raspberry PI
+OSC to rpi control python script
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=176838
