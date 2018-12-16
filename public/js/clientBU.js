@@ -66,19 +66,38 @@ function sendMyInfoToServer() {
 
 function initVideo(character) {
 	videoContainerUp1 = document.getElementById("vidUp_1");
+	videoContainerDown1 = document.getElementById("vidDown_1");
+
+	videoContainerUp2 = document.getElementById("vidUp_2");
+	videoContainerDown2 = document.getElementById("vidDown_2");
 
 	var waiting = document.getElementById('waiting_for_OSC');
 	waiting.style.display = 'none';
 
 	videoContainerUp1.style.display = "block";
+	videoContainerDown1.style.display = "block";
 
 	activeVideoContainer.up = videoContainerUp1;
+	activeVideoContainer.down = videoContainerDown1;
 
 	if(character == 'mom') {
-		videoContainerUp1.src = 'video/mom/image_size.mp4';
+		videoContainerUp1.src = 'video/mom/mor_intro_up.mp4';
+		videoContainerDown1.src = 'video/mom/mor_intro_down.mp4';
+
+		videoContainerUp2.src = 'video/mom/mor_intro_up.mp4';
+		videoContainerDown2.src = 'video/mom/mor_intro_down.mp4';
+	}
+	if(character == 'dad') {
+		videoContainerUp1.src = 'video/dad/far_intro_up.mp4';
+		videoContainerDown1.src = 'video/dad/far_intro_down.mp4';
+
+		videoContainerUp2.src = 'video/dad/far_intro_up.mp4';
+		videoContainerDown2.src = 'video/dad/far_intro_up.mp4';
 	}
 
 	videoContainerUp1.play();
+	videoContainerDown1.play();
+
 }
 
 function showHide(state) {

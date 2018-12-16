@@ -56,7 +56,31 @@ Go to 40:00 in video for explanation
 Tie RESET and SLEEP for always on
 
 # Raspberry PI
+Backup and restore SD card
+https://computers.tutsplus.com/articles/how-to-clone-raspberry-pi-sd-cards-using-the-command-line-in-os-x--mac-59911
+
+
 OSC to rpi control python script
 
 https://www.raspberrypi.org/forums/viewtopic.php?t=176838
 
+rpi BCM pinout
+https://pinout.xyz/
+
+
+motor 1:
+
+23 - Direction 1
+24 - Step 1
+
+motor 2:
+22 - Direction 2
+27 - Step 2
+
+# Control 5v relay from pi
+https://openhomeautomation.net/control-a-relay-from-anywhere-using-the-raspberry-pi
+
+
+# Video
+width: 530px
+height: ?

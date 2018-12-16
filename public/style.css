@@ -1,6 +1,7 @@
 body {
     padding: 0; 
     margin: 0;
+    background-color: #000000;
 }
 
 .button {
@@ -21,6 +22,7 @@ body {
         width: 50%;
         height: 50%;
         padding: 100px;
+        color: white;
 }
 
 
@@ -28,7 +30,16 @@ body {
     display: block;
     border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
     padding: 0px;
-    margin: 0px;
+    margin: 0px;  
+  }
+
+  #bdy, #vid_down, #vid_up, #vidUp_1, #vidUp_2, #vidDown_1, #vidDown_2 {
+      width: 530px;
+      height: auto;
+      display: block;
+      border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
+      padding: 0px;
+      margin: 0px;  
   }
   
 
