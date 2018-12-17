@@ -23,31 +23,54 @@
         WAITING ON QLAB GO... YEAH :)
     </div>
     
-        <!-- 
-            script der måler window size
+    <!---
+        <div id="wSize"></div>
         <script>
-                window.onresize = displayWindowSize;
-                window.onload = displayWindowSize;
-                
-                function displayWindowSize() {
-                    myWidth = window.innerWidth;
-                    myHeight = window.innerHeight;
-                    // your size calculation code here
-                    document.getElementById("wSize").innerHTML = myWidth + "x" + myHeight;
-                };
-            </script> -->
+            window.onresize = displayWindowSize;
+            window.onload = displayWindowSize;
+            function displayWindowSize() {
+                myWidth = window.screen.width;
+                myHeight = window.screen.height;
+                // your size calculation code here
+                document.getElementById("wSize").innerHTML = myWidth + "x" + myHeight;
+            };
+        </script>
+    -->
 
     <table>
         <tr>
             <td id="vid_up">
 
                 <video  preload="auto" 
-                        style="display: none" id="vidUp_1" src="video/mom/image_size.mp4"
+                        style="display: none" id="vidUp_1" src="video/mom/mor_intro_up.mp4"
                         loop muted>                                               
                 </video>
+
+                <video  preload="auto" 
+                        style="display: none" id="vidUp_2" src="video/mom/mor_intro_down.mp4"
+                        type="video/mp4" 
+                        loop muted>     
+                </video>
+
             </td>
         </tr>
-   
+        <tr>
+            <td id="vid_down">
+
+                <video  preload="auto" 
+                        style="display: none" id="vidDown_1"
+                        src="video/mom/mor_intro_up.mp4" type="video/mp4"  
+                        loop muted>                                                      
+                </video>
+
+                <video  preload="auto"
+                        style="display: none" id="vidDown_2" 
+                        src="video/mom/mor_intro_down.mp4" type="video/mp4" 
+                        loop muted>                                                
+                </video>
+
+            </td>
+        </tr>
     </table>
 </body>
 </html>

@@ -2,6 +2,7 @@ body {
     padding: 0; 
     margin: 0;
     background-color: #000000;
+    overflow: hidden;
 }
 
 .button {
@@ -17,6 +18,9 @@ body {
     border-radius: 12px;
 }
 
+#wSize {
+    color: white; 
+}
 .startDiv {
         margin: auto;
         width: 50%;
@@ -31,6 +35,7 @@ body {
     border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
     padding: 0px;
     margin: 0px;  
+
   }
 
   #bdy, #vid_down, #vid_up, #vidUp_1, #vidUp_2, #vidDown_1, #vidDown_2 {
@@ -39,7 +44,8 @@ body {
       display: block;
       border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
       padding: 0px;
-      margin: 0px;  
+      margin: 0px; 
+      overflow: hidden; 
   }
   
 

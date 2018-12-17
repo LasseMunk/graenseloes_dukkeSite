@@ -82,5 +82,5 @@ https://openhomeautomation.net/control-a-relay-from-anywhere-using-the-raspberry
 
 
 # Video
-width: 530px
-height: ?
+width: 534px
+height: 854px
