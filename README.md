@@ -84,3 +84,13 @@ https://openhomeautomation.net/control-a-relay-from-anywhere-using-the-raspberry
 # Video
 width: 534px
 height: 854px
+
+width i firefox: 533px
+height i firefox: 818px
+
+# pre cache
+https://developers.google.com/web/fundamentals/media/fast-playback-with-video-preload
+
+https://community.risingstack.com/redis-node-js-introduction-to-caching/
+
+http://dinbror.dk/blog/how-to-preload-entire-html5-video-before-play-solved/

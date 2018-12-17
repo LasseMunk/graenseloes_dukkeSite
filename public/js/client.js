@@ -18,13 +18,31 @@ var activeVideoContainer = {
 	down: 'container_placeholder'
 }
 
+var dadNames_up = [
+	"Far_alm_up",
+	"Far_kigger_starut_up",
+	"Far_lytter_up",
+	"Far_nye_verden_up",
+	"Far_skeptisk_up",
+	"Far_snakker_up"
+];
+
+var dadNames_down = [
+	"Far_alm_down",
+	"Far_lytter_down",
+	"Far_nye_verden_down",
+	"Far_skeptisk_down",
+	"Far_snakker_down"
+	];
+
+
 function oscMessage(data) {	 
 	
 	if (data.args[0] == 'reload'){			 
-			location.reload(true); 
+		location.reload(true); 
 		}
 	if (data.args[0] == 'initialize'){			 
-			initVideo(myInfo.character); 
+		initVideo(myInfo.character); 
 		}
 	if (data.args[0] == 'show'){			 
 		showHide('show');
@@ -39,6 +57,7 @@ function oscMessage(data) {
 }
 
 function iAm(who) {
+	requestScreenFull();
 	var character = document.getElementById("character_selector");
 	character.style.display = "none";
 
@@ -63,41 +82,56 @@ function sendMyInfoToServer() {
 	socket.emit('characterIs', myInfo);
 }
 
-
 function initVideo(character) {
-	videoContainerUp1 = document.getElementById("vidUp_1");
-	videoContainerDown1 = document.getElementById("vidDown_1");
-
-	videoContainerUp2 = document.getElementById("vidUp_2");
-	videoContainerDown2 = document.getElementById("vidDown_2");
-
 	var waiting = document.getElementById('waiting_for_OSC');
 	waiting.style.display = 'none';
 
-	videoContainerUp1.style.display = "block";
-	videoContainerDown1.style.display = "block";
-
-	activeVideoContainer.up = videoContainerUp1;
-	activeVideoContainer.down = videoContainerDown1;
-
-	if(character == 'mom') {
-		videoContainerUp1.src = 'video/mom/mor_intro_up.mp4';
-		videoContainerDown1.src = 'video/mom/mor_intro_down.mp4';
-
-		videoContainerUp2.src = 'video/mom/mor_intro_up.mp4';
-		videoContainerDown2.src = 'video/mom/mor_intro_down.mp4';
-	}
 	if(character == 'dad') {
-		videoContainerUp1.src = 'video/dad/far_intro_up.mp4';
-		videoContainerDown1.src = 'video/dad/far_intro_down.mp4';
+		// generate video containers UP
+		for(var i = 0; i < dadNames_up.length; i++){
+			console.log(dadNames_up[i]);
+			var vid = document.createElement("video");
+			vid.id = dadNames_up[i];
+			vid.src = 'video/dad/'+dadNames_up[i]+'.mp4';
+			vid.muted = true;
+			vid.autoplay = false;
+			vid.preload = 'auto';
+			vid.loop = true;
+			vid.autoplay = false;
+			vid.style.display = 'none';
+			vid.width = 536;
+			vid.height = 429;
+			document.getElementById("vid_up").appendChild(vid);
+		}
 
-		videoContainerUp2.src = 'video/dad/far_intro_up.mp4';
-		videoContainerDown2.src = 'video/dad/far_intro_up.mp4';
+		for(var i = 0; i < dadNames_up.length; i++){
+			console.log(dadNames_down[i]);
+			var vid = document.createElement("video");
+			vid.id = dadNames_down[i];
+			vid.src = 'video/dad/'+dadNames_down[i]+'.mp4';
+			vid.muted = true;
+			vid.autoplay = false;
+			vid.preload = 'auto';
+			vid.loop = true;
+			vid.autoplay = false;
+			vid.style.display = 'none';
+			vid.width = 536;
+			vid.height = 429;
+			document.getElementById("vid_down").appendChild(vid);
+		}
 	}
+}
 
-	videoContainerUp1.play();
-	videoContainerDown1.play();
+function requestScreenFull() {
+	if (screenfull.enabled) {
+		screenfull.request();
+	}
+}
 
+function disableScreenFull() {
+	if (screenfull.enabled) {
+		screenfull.exit();
+	}
 }
 
 function showHide(state) {
@@ -117,118 +151,34 @@ function snapchatOverlay(character) {
 
 function changeVideo(upDown, videoName) {
 
+	if(upDown == 'up') {	
+			playVideo = document.getElementById(videoName); 
+			playVideo.style.display = 'block'; 
+			playVideo.play();
 
-	// https://developers.google.com/web/updates/2017/06/play-request-was-interrupted
-	
-	if(myInfo.character == 'mom') {
-		var newVideo = 'video/mom/'+videoName+'.mp4';
+			if(	activeVideoContainer.up != "container_placeholder" &&
+				activeVideoContainer.up != playVideo) 
+				{
+				activeVideoContainer.up.style.display = 'none'; 
+				activeVideoContainer.up.pause();
+			}
+
+			activeVideoContainer.up = playVideo;
 	}
-	if(myInfo.character == 'dad') {
-		var newVideo = 'video/dad/'+videoName+'.mp4';
-	}
+	if(upDown == 'down') {	
+			playVideo = document.getElementById(videoName); 
+			playVideo.style.display = 'block'; 
+			playVideo.play();
 
-	if(upDown == 'up') {
-		if(prevVideo.up = 1) {
-			prevVideo.up = 2;
+			if(	activeVideoContainer.down != "container_placeholder" &&
+				activeVideoContainer.down != playVideo) 
+				{
+				activeVideoContainer.down.style.display = 'none'; 
+				activeVideoContainer.down.pause();
+			}
 
-			var videoContainer1 = document.getElementById("vidUp_1");
-			var videoContainer2 = document.getElementById("vidUp_2");
-
-			// pause and hide video container 1
-			videoContainer2.style.display = "block";
-			videoContainer1.style.display = "none";
-
-			activeVideoContainer.up = videoContainer2;
-
-			videoContainer2.play();
-			
-			// new source in video container 1
-			videoContainer1.src = newVideo;
-			// videoContainer1.load();
-			// videoContainer1.pause();
-		}
-
-		if(prevVideo.up = 2) {
-			prevVideo.up = 1;
-
-			var videoContainer1 = document.getElementById("vidUp_1");
-			var videoContainer2 = document.getElementById("vidUp_2");
-
-			// pause and hide video container 2
-			videoContainer1.style.display = "block";
-			videoContainer2.style.display = "none";
-
-			activeVideoContainer.up = videoContainer1;
-
-			videoContainer1.play();
-			
-			// new source in video container 1
-			videoContainer2.src = newVideo;
-			// videoContainer1.load();
-			// videoContainer2.pause();
-		}
-	}
-	if(upDown == 'down') {
-		if(prevVideo.down = 1) {
-			prevVideo.down = 2;
-
-			var videoContainer1 = document.getElementById("vidDown_1");
-			var videoContainer2 = document.getElementById("vidDown_2");
-
-			// pause and hide video container 1
-			videoContainer2.style.display = "block";
-			videoContainer1.style.display = "none";
-
-			activeVideoContainer.down = videoContainer2;
-
-			videoContainer2.play();
-			
-			// new source in video container 1
-			videoContainer1.src = newVideo;
-			videoContainer1.pause();
-		}
-
-		if(prevVideo.down = 2) {
-			prevVideo.down = 1;
-
-			var videoContainer1 = document.getElementById("vidDown_1");
-			var videoContainer2 = document.getElementById("vidDown_2");
-
-			// pause and hide video container 2
-			videoContainer1.style.display = "block";
-			videoContainer2.style.display = "none";
-
-			activeVideoContainer.down = videoContainer1;
-
-			videoContainer1.play();
-			
-			// new source in video container 1
-			videoContainer2.src = newVideo;
-			videoContainer2.pause();
-		}
+			activeVideoContainer.down = playVideo;
 	}
 }
 
-function openFullscreen() {
-
-// https://developers.google.com/web/fundamentals/native-hardware/fullscreen/
-
-	/* Get the element you want displayed in fullscreen 
-	mode (a video in this example): */
-	var elem = document.getElementById("bdy"); 
-
-	/* When the openFullscreen() function is executed, open the video in fullscreen.
-	Note that we must include prefixes for different browsers,
-	as they don't support the requestFullscreen method yet */
-
-  if (elem.requestFullscreen) {
-    document.body.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { /* Firefox */
-    document.body.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    document.body.requestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    document.body.requestFullscreen();
-  }
-}
 
