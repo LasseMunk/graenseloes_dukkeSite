@@ -2,7 +2,7 @@ body {
     padding: 0px; 
     margin: 0px;
     background-color: #000000;
-    overflow: hidden;
+    
 }
 
 .button {
@@ -30,22 +30,26 @@ body {
 }
 
 
-  table, td, tr, img, video {
+table, td, tr, img, video {
     display: block;
-    border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
+    border-collapse: collapse; 
     padding: 0px;
     margin: 0px;  
-    overflow: hidden;
   }
 
-  #vid_down, #vid_up {
-        min-width: 100%;
-        min-width: 100%;
-        border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
-        padding: 0px;
-        margin: 0px; 
-        
-  }
+#vid_up {
+    border-collapse: collapse; 
+    padding: 0px;
+    margin: 0px; 
+    overflow: hidden;
+}
+
+#vid_down {
+    border-collapse: collapse;  
+    padding: 0px;
+    margin: 0px; 
+    overflow: hidden;
+}
   
 
  

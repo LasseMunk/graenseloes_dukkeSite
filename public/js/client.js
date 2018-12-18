@@ -86,6 +86,8 @@ function initVideo(character) {
 	var waiting = document.getElementById('waiting_for_OSC');
 	waiting.style.display = 'none';
 
+	// setVidUpDownPositionAbsolute();
+
 	if(character == 'dad') {
 		// generate video containers UP
 		for(var i = 0; i < dadNames_up.length; i++){
@@ -99,8 +101,8 @@ function initVideo(character) {
 			vid.loop = true;
 			vid.autoplay = false;
 			vid.style.display = 'none';
-			vid.width = 536;
-			vid.height = 429;
+			vid.width = 534;
+			vid.height = 425;
 			document.getElementById("vid_up").appendChild(vid);
 		}
 
@@ -115,11 +117,24 @@ function initVideo(character) {
 			vid.loop = true;
 			vid.autoplay = false;
 			vid.style.display = 'none';
-			vid.width = 536;
-			vid.height = 429;
+			vid.width = 534;
+			vid.height = 425;
 			document.getElementById("vid_down").appendChild(vid);
 		}
 	}
+}
+
+function setVidUpDownPositionAbsolute() {
+	var up = document.getElementById('vid_up');
+	var down = document.getElementById('vid_down');
+
+	up.style.position = 'relative';
+	up.style.x = 200;
+	up.style.y = 0;
+
+	down.style.position = 'absolute';
+	down.style.x = 0;
+	down.style.y = 850;
 }
 
 function requestScreenFull() {
@@ -150,7 +165,7 @@ function snapchatOverlay(character) {
 }
 
 function changeVideo(upDown, videoName) {
-
+	
 	if(upDown == 'up') {	
 			playVideo = document.getElementById(videoName); 
 			playVideo.style.display = 'block'; 
