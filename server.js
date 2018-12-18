@@ -7,7 +7,7 @@ var app = express();						// express is a function call which create an
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var osc = require("osc");
-var screenfull = require('screenfull');
+
 
 http.listen(3000, function(){				// begins a server which listens on port 3000
   console.log('listening on *:3000');

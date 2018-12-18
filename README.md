@@ -89,6 +89,10 @@ width i firefox: 533px
 height i firefox: 818px
 
 # pre cache
+Using firefox instead of chrome and loading plentey of 
+<video> players solved the problem. 
+
+
 https://developers.google.com/web/fundamentals/media/fast-playback-with-video-preload
 
 https://community.risingstack.com/redis-node-js-introduction-to-caching/
