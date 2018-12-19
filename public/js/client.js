@@ -18,6 +18,27 @@ var activeVideoContainer = {
 	down: 'container_placeholder'
 }
 
+var momNames_up = [
+	"Mor_alm1_up",
+	"Mor_bange_up",
+	"Mor_kigger_starut_up",
+	"Mor_lytter_hus_up",
+	"Mor_ny_verden_up",
+	"Mor_snakker_up",
+	"Mor_utilfreds_up"
+];
+
+var momNames_down = [
+	"Mor_alm1_down",
+	"Mor_bange_down",
+	"Mor_kigger_starut_down",
+	"Mor_lytter_hus_down",
+	"Mor_ny_verden_down",
+	"Mor_snakker_down",
+	"Mor_utilfreds_down"
+];
+
+
 var dadNames_up = [
 	"Far_alm_up",
 	"Far_kigger_starut_up",
@@ -35,8 +56,8 @@ var dadNames_down = [
 	"Far_snakker_down"
 	];
 
-
 function oscMessage(data) {	 
+	console.log('client side oscMessage ' + data);
 	
 	if (data.args[0] == 'reload'){			 
 		location.reload(true); 
@@ -44,6 +65,7 @@ function oscMessage(data) {
 	if (data.args[0] == 'initialize'){			 
 		initVideo(myInfo.character); 
 		}
+
 	if (data.args[0] == 'show'){			 
 		showHide('show');
 	}
@@ -86,12 +108,45 @@ function initVideo(character) {
 	var waiting = document.getElementById('waiting_for_OSC');
 	waiting.style.display = 'none';
 
-	// setVidUpDownPositionAbsolute();
+	if(character == 'mom') {
+		// generate video containers UP
+		for(var i = 0; i < momNames_up.length; i++){
+			console.log(momNames_up[i]);
+			var vid = document.createElement("video");
+			vid.id = momNames_up[i];
+			vid.src = 'video/mom/'+momNames_up[i]+'.mp4';
+			vid.muted = true;
+			vid.autoplay = false;
+			vid.preload = 'auto';
+			vid.loop = true;
+			vid.autoplay = false;
+			vid.style.display = 'none';
+			vid.width = 534;
+			vid.height = 425;
+			document.getElementById("vid_up").appendChild(vid);
+		}
+
+		for(var i = 0; i < momNames_down.length; i++){
+			console.log(momNames_down[i]);
+			var vid = document.createElement("video");
+			vid.id = momNames_down[i];
+			vid.src = 'video/mom/'+momNames_down[i]+'.mp4';
+			vid.muted = true;
+			vid.autoplay = false;
+			vid.preload = 'auto';
+			vid.loop = true;
+			vid.autoplay = false;
+			vid.style.display = 'none';
+			vid.width = 534;
+			vid.height = 425;
+			document.getElementById("vid_down").appendChild(vid);
+		}
+	}
 
 	if(character == 'dad') {
 		// generate video containers UP
 		for(var i = 0; i < dadNames_up.length; i++){
-			console.log(dadNames_up[i]);
+			
 			var vid = document.createElement("video");
 			vid.id = dadNames_up[i];
 			vid.src = 'video/dad/'+dadNames_up[i]+'.mp4';
@@ -106,8 +161,8 @@ function initVideo(character) {
 			document.getElementById("vid_up").appendChild(vid);
 		}
 
-		for(var i = 0; i < dadNames_up.length; i++){
-			console.log(dadNames_down[i]);
+		for(var i = 0; i < dadNames_down.length; i++){
+			
 			var vid = document.createElement("video");
 			vid.id = dadNames_down[i];
 			vid.src = 'video/dad/'+dadNames_down[i]+'.mp4';
@@ -122,6 +177,11 @@ function initVideo(character) {
 			document.getElementById("vid_down").appendChild(vid);
 		}
 	}
+}
+
+function returnPing() {
+	console.log('ping');
+	socket.emit('ping', myInfo.character);
 }
 
 function setVidUpDownPositionAbsolute() {
