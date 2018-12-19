@@ -7,7 +7,7 @@ var app = express();						// express is a function call which create an
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var osc = require("osc");
-var screenfull = require('screenfull');
+
 
 http.listen(3000, function(){				// begins a server which listens on port 3000
   console.log('listening on *:3000');
@@ -26,6 +26,20 @@ var characterHashes = {
     dad: 'hash_placeholder'
 };
 
+function socketStayAlive(who) {
+    console.log('socket stay alive called');
+    if(who == 'mom') {
+        setInterval(function() {
+            io.sockets.connected[characterHashes.mom].emit('message', 'ping'); 
+        }, 10000);
+    }
+    if(who == 'dad') {
+        setInterval(function() {
+            io.sockets.connected[characterHashes.dad].emit('message', 'ping'); 
+        }, 10000);
+    }
+}
+
 /* ---------------------------------------------
 	generate client side files from src folder
    -------------------------------------------- */ 
@@ -39,14 +53,17 @@ client.on('event', function(data){
 client.on('disconnect', function(){
     clientDisconnect(client); // call function when client is disconnecting
     });
+
 client.on('characterIs', function(data) { 
     // receiving 'i am this character' from client
     
         if(data.character == 'mom') {
             characterHashes.mom = data.hash;
+           // socketStayAlive('mom');
         };
         if(data.character == 'dad') {
             characterHashes.dad = data.hash;
+          //  socketStayAlive('dad');
         };
     });
 });

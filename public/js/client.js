@@ -57,6 +57,7 @@ var dadNames_down = [
 	];
 
 function oscMessage(data) {	 
+	console.log('client side oscMessage ' + data);
 	
 	if (data.args[0] == 'reload'){			 
 		location.reload(true); 
@@ -64,6 +65,7 @@ function oscMessage(data) {
 	if (data.args[0] == 'initialize'){			 
 		initVideo(myInfo.character); 
 		}
+
 	if (data.args[0] == 'show'){			 
 		showHide('show');
 	}
@@ -175,6 +177,11 @@ function initVideo(character) {
 			document.getElementById("vid_down").appendChild(vid);
 		}
 	}
+}
+
+function returnPing() {
+	console.log('ping');
+	socket.emit('ping', myInfo.character);
 }
 
 function setVidUpDownPositionAbsolute() {
