@@ -65,7 +65,7 @@ function oscMessage(data) {
 		initVideo(myInfo.character); 
 	}
 	if (data.args[0] == 'ping'){			 
-		returnPing();
+		// returnPing();
 	}
 	if (data.args[0] == 'show'){			 
 		showHide('show');
@@ -111,7 +111,6 @@ function initVideo(character) {
 	if(character == 'mom') {
 		// generate video containers UP
 		for(var i = 0; i < momNames_up.length; i++){
-			console.log(momNames_up[i]);
 			var vid = document.createElement("video");
 			vid.id = momNames_up[i];
 			vid.src = 'video/mom/'+momNames_up[i]+'.mp4';
@@ -127,7 +126,6 @@ function initVideo(character) {
 		}
 
 		for(var i = 0; i < momNames_down.length; i++){
-			console.log(momNames_down[i]);
 			var vid = document.createElement("video");
 			vid.id = momNames_down[i];
 			vid.src = 'video/mom/'+momNames_down[i]+'.mp4';

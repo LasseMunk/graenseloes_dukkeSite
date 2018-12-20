@@ -63,17 +63,16 @@ io.on('connection', function(client){
         
             if(data.character == 'mom') {
                 characterHashes.mom = data.hash;
-                socketStayAlive('mom');
+                // socketStayAlive('mom');
             };
             if(data.character == 'dad') {
                 characterHashes.dad = data.hash;
-                socketStayAlive('dad');
+                // socketStayAlive('dad');
             };
         });
-
     client.on('ping', function(data) {
         console.log('ping from client'); 
-    });
+    }); 
 });
 
 function clientConnect(socket) {
@@ -160,16 +159,25 @@ udpPort.on("message", function (oscMessage) {
             console.log('mom is undefined');
         }
         else {
-
-            io.sockets.connected[characterHashes.mom].emit('message', oscMessage);  
+            if(characterHashes.mom != 'hash_placeholder') {
+                io.sockets.connected[characterHashes.mom].emit('message', oscMessage);  
+            }
+            else {
+                console.log('mom is undefined');
+            }
         }
     }
     if(oscMessage.address == '/dad') {
         if(typeof characterHashes.dad === "undefined" ) {
-            console.log('dad is undefined')
+            console.log('dad is undefined');
         }
         else {
-            io.sockets.connected[characterHashes.dad].emit('message', oscMessage);  
+            if(characterHashes.dad != 'hash_placeholder') {
+                io.sockets.connected[characterHashes.dad].emit('message', oscMessage);  
+            }
+            else {
+                console.log('dad is undefined');
+            }
         }
     }
     
