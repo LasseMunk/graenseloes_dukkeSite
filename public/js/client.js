@@ -65,7 +65,7 @@ function oscMessage(data) {
 		initVideo(myInfo.character); 
 	}
 	if (data.args[0] == 'ping'){			 
-		// returnPing();
+		returnPing();
 	}
 	if (data.args[0] == 'show'){			 
 		showHide('show');
@@ -74,14 +74,27 @@ function oscMessage(data) {
 		showHide('hide');
 	}
 	if (data.args[0] == 'up' || data.args[0] == 'down'){		 
-			changeVideo(data.args[0], data.args[1]);
-  	}
+		changeVideo(data.args[0], data.args[1]);
+	}
+	if (data.args[0] == 'showFullscreenButton') {
+		var but = document.getElementById('goFullscreenDiv');
+		but.style.display = 'block';
+	}
+	if (data.args[0] == 'disableFullscreen') {
+		disableScreenFull();
+	}
+	if (data.args[0] == 'showSnapchatOverlay') {
+		showSnapchatOverlay();
+	}
+	if (data.args[0] == 'hideSnapchatOverlay') {
+		hideSnapchatOverlay();
+	}
 }
 
 function iAm(who) {
-	requestScreenFull();
+	// requestScreenFull();
 	var character = document.getElementById("character_selector");
-	character.style.display = "none";
+	character.style.display = 'none';
 
 	var waiting = document.getElementById('waiting_for_OSC');
 	waiting.style.display = 'block';
@@ -96,6 +109,9 @@ function iAm(who) {
 
 function setMyHash(data) {
 	myInfo.hash = data;
+	if(myInfo.character != 'character_placeHolder') {
+		sendMyInfoToServer();
+	}
 	console.log("hash set: " + myInfo.hash);
 }
 
@@ -178,7 +194,13 @@ function initVideo(character) {
 }
 
 function returnPing() {
-	socket.emit('ping', myInfo);
+
+	var pingToServer = {
+        args: ["ping"]
+    };
+
+	socket.emit('whatsupserver', pingToServer); // return ping to server
+	console.log('send ping to server');
 }
 
 function setVidUpDownPositionAbsolute() {
@@ -199,6 +221,11 @@ function requestScreenFull() {
 		screenfull.request();
 	}
 }
+function enableScreenFull() {
+	var but = document.getElementById('goFullscreenDiv');
+	but.style.display = 'none';
+	requestScreenFull();
+}
 
 function disableScreenFull() {
 	if (screenfull.enabled) {
@@ -217,40 +244,55 @@ function showHide(state) {
 	}
 }
 
-function snapchatOverlay(character) {
-	// how the hell ?
+function showSnapchatOverlay(character) {
+	var overlay = document.getElementById('snapchat');
+	overlay.style.display = "block";
+}
+function hideSnapchatOverlay(character) {
+	var overlay = document.getElementById('snapchat');
+	overlay.style.display = "none";
 }
 
 function changeVideo(upDown, videoName) {
-	
 	if(upDown == 'up') {	
 			playVideo = document.getElementById(videoName); 
-			playVideo.style.display = 'block'; 
-			playVideo.play();
 
-			if(	activeVideoContainer.up != "container_placeholder" &&
-				activeVideoContainer.up != playVideo) 
-				{
-				activeVideoContainer.up.style.display = 'none'; 
-				activeVideoContainer.up.pause();
+			if(typeof playVideo === "undefined" ) {
+				console.log('video is undefined');
 			}
+			else {
+				playVideo.style.display = 'block'; 
+				playVideo.play();
 
-			activeVideoContainer.up = playVideo;
+				if(	activeVideoContainer.up != "container_placeholder" &&
+					activeVideoContainer.up != playVideo) 
+					{
+					activeVideoContainer.up.style.display = 'none'; 
+					activeVideoContainer.up.pause();
+				}
+
+				activeVideoContainer.up = playVideo;
+		}
 	}
 	if(upDown == 'down') {	
 			playVideo = document.getElementById(videoName); 
-			playVideo.style.display = 'block'; 
-			playVideo.play();
-
-			if(	activeVideoContainer.down != "container_placeholder" &&
-				activeVideoContainer.down != playVideo) 
-				{
-				activeVideoContainer.down.style.display = 'none'; 
-				activeVideoContainer.down.pause();
+			if(typeof playVideo === "undefined" ) {
+				console.log('video is undefined');
 			}
+			else {
+				playVideo.style.display = 'block'; 
+				playVideo.play();
 
-			activeVideoContainer.down = playVideo;
-	}
+				if(	activeVideoContainer.down != "container_placeholder" &&
+					activeVideoContainer.down != playVideo) 
+					{
+					activeVideoContainer.down.style.display = 'none'; 
+					activeVideoContainer.down.pause();
+				}
+
+				activeVideoContainer.down = playVideo;
+		}
+	} 
 }
 
 
