@@ -57,22 +57,22 @@ var dadNames_down = [
 	];
 
 function oscMessage(data) {	 
-	console.log('client side oscMessage ' + data);
 	
 	if (data.args[0] == 'reload'){			 
 		location.reload(true); 
-		}
+	}
 	if (data.args[0] == 'initialize'){			 
 		initVideo(myInfo.character); 
-		}
-
+	}
+	if (data.args[0] == 'ping'){			 
+		returnPing();
+	}
 	if (data.args[0] == 'show'){			 
 		showHide('show');
 	}
 	if (data.args[0] == 'hide'){			 
 		showHide('hide');
 	}
-	
 	if (data.args[0] == 'up' || data.args[0] == 'down'){		 
 			changeVideo(data.args[0], data.args[1]);
   	}
@@ -180,8 +180,7 @@ function initVideo(character) {
 }
 
 function returnPing() {
-	console.log('ping');
-	socket.emit('ping', myInfo.character);
+	socket.emit('ping', myInfo);
 }
 
 function setVidUpDownPositionAbsolute() {

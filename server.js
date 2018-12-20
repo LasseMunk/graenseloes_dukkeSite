@@ -27,15 +27,19 @@ var characterHashes = {
 };
 
 function socketStayAlive(who) {
-    console.log('socket stay alive called');
+
+    var messageObj = {
+        args: ["ping"]
+    };
+
     if(who == 'mom') {
         setInterval(function() {
-            io.sockets.connected[characterHashes.mom].emit('message', 'ping'); 
+            io.sockets.connected[characterHashes.mom].emit('message', messageObj); 
         }, 10000);
     }
     if(who == 'dad') {
         setInterval(function() {
-            io.sockets.connected[characterHashes.dad].emit('message', 'ping'); 
+            io.sockets.connected[characterHashes.dad].emit('message', messageObj); 
         }, 10000);
     }
 }
@@ -46,25 +50,29 @@ function socketStayAlive(who) {
 io.on('connection', function(client){
     clientConnect(client); // call function when client is connecting
 
-client.on('event', function(data){
-    // add event logic
-});
-
-client.on('disconnect', function(){
-    clientDisconnect(client); // call function when client is disconnecting
+    client.on('event', function(data){
+        // add event logic
     });
 
-client.on('characterIs', function(data) { 
-    // receiving 'i am this character' from client
-    
-        if(data.character == 'mom') {
-            characterHashes.mom = data.hash;
-           // socketStayAlive('mom');
-        };
-        if(data.character == 'dad') {
-            characterHashes.dad = data.hash;
-          //  socketStayAlive('dad');
-        };
+    client.on('disconnect', function(){
+        clientDisconnect(client); // call function when client is disconnecting
+        });
+
+    client.on('characterIs', function(data) { 
+        // receiving 'i am this character' from client
+        
+            if(data.character == 'mom') {
+                characterHashes.mom = data.hash;
+                socketStayAlive('mom');
+            };
+            if(data.character == 'dad') {
+                characterHashes.dad = data.hash;
+                socketStayAlive('dad');
+            };
+        });
+
+    client.on('ping', function(data) {
+        console.log('ping from client'); 
     });
 });
 
@@ -99,8 +107,6 @@ function clientDisconnect (socket) {
  ****************/
 
 // When sending OSC, use /your-osc-message to avoid errors
-
-
 
 var getIPAddresses = function () {
     var os = require("os"),
