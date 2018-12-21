@@ -88,6 +88,10 @@ height: 854px
 width i firefox: 533px
 height i firefox: 818px
 
+#tablet firefox browser resolution
+about:config
+layout.css.devPixelsPerPx ændres fra -1 til 3
+
 # pre cache
 Using firefox instead of chrome and loading plentey of 
 <video> players solved the problem. 

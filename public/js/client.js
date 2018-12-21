@@ -45,7 +45,8 @@ var dadNames_up = [
 	"Far_lytter_up",
 	"Far_nye_verden_up",
 	"Far_skeptisk_up",
-	"Far_snakker_up"
+	"Far_snakker_up",
+	"Far_bange_up"
 ];
 
 var dadNames_down = [
@@ -53,7 +54,8 @@ var dadNames_down = [
 	"Far_lytter_down",
 	"Far_nye_verden_down",
 	"Far_skeptisk_down",
-	"Far_snakker_down"
+	"Far_snakker_down",
+	"Far_bange_down"
 	];
 
 function oscMessage(data) {	 
@@ -74,7 +76,7 @@ function oscMessage(data) {
 		showHide('hide');
 	}
 	if (data.args[0] == 'up' || data.args[0] == 'down'){		 
-			changeVideo(data.args[0], data.args[1]);
+		changeVideo(data.args[0], data.args[1]);
   	}
 }
 
