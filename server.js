@@ -26,21 +26,42 @@ var characterHashes = {
     dad: 'hash_placeholder'
 };
 
+var lastDisconnected = 'character_placeholder';
+
+var characterIntervalID = {
+    mom: 'interval_placeholder',
+    dad: 'interval_placeholder'
+}
+
 function socketStayAlive(who) {
 
+    // start setInterval pinging tablets to avoid websockets closes
+
     var messageObj = {
-        args: ["ping"]
+        args: ["ping"] 
     };
 
     if(who == 'mom') {
-        setInterval(function() {
-            io.sockets.connected[characterHashes.mom].emit('message', messageObj); 
-        }, 10000);
+        characterIntervalID.mom = setInterval(function() {
+            if(characterHashes.mom != "hash_placeholder" ) { 
+                for(var i = 0; i < clientIds.length; i++) { 
+                    if(clientIds[i] == characterHashes.mom) { 
+                        io.sockets.connected[characterHashes.mom].emit('message', messageObj); 
+                    }
+                }
+            }
+        }, 1000);
     }
     if(who == 'dad') {
-        setInterval(function() {
-            io.sockets.connected[characterHashes.dad].emit('message', messageObj); 
-        }, 10000);
+        characterIntervalID.dad = setInterval(function() {
+            if(characterHashes.dad != "hash_placeholder" ) {    // test if hash is in connected ids
+                for(var i = 0; i < clientIds.length; i++) {
+                    if(clientIds[i] == characterHashes.dad) {
+                        io.sockets.connected[characterHashes.dad].emit('message', messageObj); 
+                    }
+                }
+            }
+        }, 1000);
     }
 }
 
@@ -63,15 +84,24 @@ io.on('connection', function(client){
         
             if(data.character == 'mom') {
                 characterHashes.mom = data.hash;
-                // socketStayAlive('mom');
+                socketStayAlive('mom');
             };
             if(data.character == 'dad') {
                 characterHashes.dad = data.hash;
-                // socketStayAlive('dad');
+                socketStayAlive('dad');
             };
+       
+            if(characterHashes.mom != 'hash_placeholder') {
+                console.log('mom hash: ' + characterHashes.mom);
+            }
+            if(characterHashes.dad != 'hash_placeholder') { 
+                console.log('dad hash: ' + characterHashes.dad);
+            }
+       
         });
-    client.on('ping', function(data) {
-        console.log('ping from client'); 
+
+    client.on('whatsupserver', function(data) {
+        // console.log('ping from client: ' + Math.random()); 
     }); 
 });
 
@@ -94,11 +124,19 @@ function clientConnect(socket) {
 
 function clientDisconnect (socket) {
     
+    if(socket == characterHashes.mom) {
+        lastDisconnected = 'mom';
+        characterHashes.mom = 'hash_placeholder';
+    }
+    if(socket == characterHashes.dad) {
+        lastDisconnected = 'dad';
+        characterHashes.dad = 'hash_placeholder';
+    }
+
     var i = clientIds.indexOf(socket);
     clientIds.splice(i, 1); // delete socket.id from clientIds array
     
     console.log ("disconnected, clients array: " + clientIds);
-    
 }
 
 /****************
@@ -146,10 +184,6 @@ udpPort.on("ready", function () {
 udpPort.on("message", function (oscMessage) {
     console.log(oscMessage);
 
-    /* 
-        /whichCharacter upOrDown play preLoadNextVideo
-    */
-
     if (oscMessage.address == '/all') {
         io.sockets.emit("message", oscMessage);   // send to all
     };
@@ -179,8 +213,7 @@ udpPort.on("message", function (oscMessage) {
                 console.log('dad is undefined');
             }
         }
-    }
-    
+    }  
 });
 
 udpPort.on("error", function (err) {

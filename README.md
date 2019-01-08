@@ -47,6 +47,24 @@ Motor pins:
 4   BLUE    B\    
 
 
+
+
+# Teensy motor setup
+
+Mor: pin 38 = step, pin 37 = direction
+Far: pin 36 = step, pin 35 = direction
+
+# Raspberry motor setup
+motor 1:
+
+23 - Direction 1
+24 - Step 1
+
+motor 2:
+22 - Direction 2
+27 - Step 2
+
+
 # A4988 Controller board pins
 
 https://www.youtube.com/watch?v=0qwrnUeSpYQ
@@ -68,23 +86,14 @@ rpi BCM pinout
 https://pinout.xyz/
 
 
-motor 1:
 
-23 - Direction 1
-24 - Step 1
 
-motor 2:
-22 - Direction 2
-27 - Step 2
 
 # Control 5v relay from pi
 https://openhomeautomation.net/control-a-relay-from-anywhere-using-the-raspberry-pi
 
 
 # Video
-width: 534px
-height: 854px
-
 width i firefox: 533px
 height i firefox: 818px
 
