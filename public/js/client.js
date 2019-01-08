@@ -80,6 +80,10 @@ function oscMessage(data) {
 		var but = document.getElementById('goFullscreenDiv');
 		but.style.display = 'block';
 	}
+	if (data.args[0] == 'setFilter') {
+		setFilter(data.args[1], data.args[2], data.args[3]);
+		
+	}
 	if (data.args[0] == 'disableFullscreen') {
 		disableScreenFull();
 	}
@@ -118,6 +122,15 @@ function setMyHash(data) {
 function sendMyInfoToServer() {
 	console.log("send character: " + myInfo.character + " hash: " + myInfo.hash);
 	socket.emit('characterIs', myInfo);
+}
+
+function setFilter(upDown, filter, fValue) {
+
+	var value = ""+filter+"("+fValue+")";
+	upDown = ""+upDown+"";
+	document.getElementById(upDown).style.webkitFilter = value;
+	
+
 }
 
 function initVideo(character) {

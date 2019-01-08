@@ -101,7 +101,7 @@ io.on('connection', function(client){
         });
 
     client.on('whatsupserver', function(data) {
-        console.log('ping from client: ' + Math.random()); 
+        // console.log('ping from client: ' + Math.random()); 
     }); 
 });
 
