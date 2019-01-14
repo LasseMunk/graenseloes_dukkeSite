@@ -62,6 +62,7 @@ table, td, tr, video {
     padding: 0px;
     margin: 0px; 
     overflow: hidden;
+    opacity: 0.5;
 }
 
 #vid_down {
