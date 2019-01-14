@@ -98,7 +98,7 @@ function oscMessage(data) {
 }
 
 function iAm(who) {
-	// requestScreenFull();
+	requestScreenFull();
 	var character = document.getElementById("character_selector");
 	character.style.display = 'none';
 
