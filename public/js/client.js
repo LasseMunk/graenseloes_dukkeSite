@@ -45,8 +45,7 @@ var dadNames_up = [
 	"Far_lytter_up",
 	"Far_nye_verden_up",
 	"Far_skeptisk_up",
-	"Far_snakker_up",
-	"Far_bange_up"
+	"Far_snakker_up"
 ];
 
 var dadNames_down = [
@@ -54,8 +53,7 @@ var dadNames_down = [
 	"Far_lytter_down",
 	"Far_nye_verden_down",
 	"Far_skeptisk_down",
-	"Far_snakker_down",
-	"Far_bange_down"
+	"Far_snakker_down"
 	];
 
 function oscMessage(data) {	 
@@ -98,7 +96,7 @@ function oscMessage(data) {
 }
 
 function iAm(who) {
-	requestScreenFull();
+	// requestScreenFull();
 	var character = document.getElementById("character_selector");
 	character.style.display = 'none';
 
@@ -131,7 +129,6 @@ function setFilter(upDown, filter, fValue) {
 	var value = ""+filter+"("+fValue+")";
 	upDown = ""+upDown+"";
 	document.getElementById(upDown).style.webkitFilter = value;
-	
 
 }
 
@@ -170,6 +167,8 @@ function initVideo(character) {
 			vid.height = 425;
 			document.getElementById("vid_down").appendChild(vid);
 		}
+
+		document.body.style.background = "#ffffff url('img/mor_bg.png') no-repeat left top";
 	}
 
 	if(character == 'dad') {
