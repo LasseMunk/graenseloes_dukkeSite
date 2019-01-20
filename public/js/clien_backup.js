@@ -48,8 +48,7 @@ var dadNames_up = [
 	"Far_nye_verden_up",
 	"Far_skeptisk_up",
 	"Far_snakker_up",
-	"Far_snakker_up_blink",
-	"Far_bange_up"
+	"Far_snakker_up_blink"
 ];
 
 var dadNames_down = [
@@ -58,8 +57,7 @@ var dadNames_down = [
 	"Far_nye_verden_down",
 	"Far_skeptisk_down",
 	"Far_snakker_down",
-	"Far_snakker_down_blink",
-	"Far_bange_down"
+	"Far_snakker_down_blink"
 	];
 
 var cloudNames = [
@@ -149,20 +147,14 @@ function initVideo(character) {
 	if(character == 'mom') {
 		// generate video containers UP
 		for(var i = 0; i < momNames_up.length; i++){
-
 			var vid = document.createElement("video");
 			vid.id = momNames_up[i];
-
-			var vidSrc = document.createElement("source");
-			vidSrc.type = 'video/mp4';
-			vidSrc.src = 'video/mom/'+momNames_up[i]+'.mp4';
-
-			vid.appendChild(vidSrc);
-
+			vid.src = 'video/mom/'+momNames_up[i]+'.mp4';
 			vid.muted = true;
 			vid.autoplay = false;
 			vid.preload = 'auto';
 			vid.loop = true;
+			vid.poster = 'img/mor/mor_alm_up_poster.png';
 			vid.autoplay = false;
 			vid.style.display = 'none';
 			vid.width = 534;
@@ -171,20 +163,14 @@ function initVideo(character) {
 		}
 
 		for(var i = 0; i < momNames_down.length; i++){
-
 			var vid = document.createElement("video");
 			vid.id = momNames_down[i];
-
-			var vidSrc = document.createElement("source");
-			vidSrc.type = 'video/mp4';
-			vidSrc.src = 'video/mom/'+momNames_down[i]+'.mp4';
-
-			vid.appendChild(vidSrc);
-
+			vid.src = 'video/mom/'+momNames_down[i]+'.mp4';
 			vid.muted = true;
 			vid.autoplay = false;
 			vid.preload = 'auto';
 			vid.loop = true;
+			vid.poster = 'img/mor/mor_alm_down_poster.png';
 			vid.autoplay = false;
 			vid.style.display = 'none';
 			vid.width = 534;
@@ -200,14 +186,9 @@ function initVideo(character) {
 		for(var i = 0; i < dadNames_up.length; i++){
 			
 			var vid = document.createElement("video");
+			vid.type = 'video/mp4';
 			vid.id = dadNames_up[i];
-
-			var vidSrc = document.createElement("source");
-			vidSrc.type = 'video/mp4';
-			vidSrc.src = 'video/dad/'+dadNames_up[i]+'.mp4';
-
-			vid.appendChild(vidSrc);
-
+			vid.src = 'video/dad/'+dadNames_up[i]+'.mp4';
 			vid.muted = true;
 			vid.autoplay = false;
 			vid.preload = 'auto';
@@ -220,16 +201,10 @@ function initVideo(character) {
 		}
 
 		for(var i = 0; i < dadNames_down.length; i++){
-			
 			var vid = document.createElement("video");
+			vid.type = 'video/mp4';
 			vid.id = dadNames_down[i];
-
-			var vidSrc = document.createElement("source");
-			vidSrc.type = 'video/mp4';
-			vidSrc.src = 'video/dad/'+dadNames_down[i]+'.mp4';
-
-			vid.appendChild(vidSrc);
-
+			vid.src = 'video/dad/'+dadNames_down[i]+'.mp4';
 			vid.muted = true;
 			vid.autoplay = false;
 			vid.preload = 'auto';
@@ -248,7 +223,7 @@ function initVideo(character) {
 function cacheCloud() {
 	for(var i = 0; i < cloudNames.length; i++){
 		var vid = document.createElement("video");
-		vid.id = cloudNames[i];
+		vid.id = cloudNames_down[i];
 		vid.src = 'video/i_skyen/'+cloudNames[i]+'.mp4';
 		vid.muted = true;
 		vid.autoplay = false;
@@ -284,11 +259,9 @@ function setVidUpDownPositionAbsolute() {
 }
 
 function requestScreenFull() {
-	/*
 	if (screenfull.enabled) {
 		screenfull.request();
-	} */
-	document.body.requestFullscreen({ navigationUI: "hide"});
+	}
 }
 function enableScreenFull() {
 	var but = document.getElementById('goFullscreenDiv');
@@ -324,9 +297,7 @@ function hideSnapchatOverlay(character) {
 
 function changeVideo(upDown, videoName) {
 	if(upDown == 'up') {	
-			playVideo = document.getElementById(videoName);
-			playVideo.style.width ='100%';
-			playVideo.style.height ='100%'; 
+			playVideo = document.getElementById(videoName); 
 
 			if(typeof playVideo === "undefined" ) {
 				console.log('video is undefined');
@@ -347,9 +318,6 @@ function changeVideo(upDown, videoName) {
 	}
 	if(upDown == 'down') {	
 			playVideo = document.getElementById(videoName); 
-			playVideo.style.width ='100%';
-			playVideo.style.height ='100%'; 
-
 			if(typeof playVideo === "undefined" ) {
 				console.log('video is undefined');
 			}
@@ -371,12 +339,10 @@ function changeVideo(upDown, videoName) {
 
 function iSkyenPlay() {
 	showHide('hide'); // hide up / down video container
-	var sky = document.getElementById('i_skyen');
-	sky.style.display = "block";
-	sky.play();
+	var overlay = document.getElementById('i_skyen');
+	overlay.style.display = "block";
 }
 function iSkyenHide() {
-	var sky = document.getElementById('i_skyen');
-	sky.style.display = "none";
-	sky.pause();
+	var overlay = document.getElementById('i_skyen');
+	overlay.style.display = "none";
 }

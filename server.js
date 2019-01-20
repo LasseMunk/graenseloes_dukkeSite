@@ -50,7 +50,7 @@ function socketStayAlive(who) {
                     }
                 }
             }
-        }, 1000);
+        }, 10000);
     }
     if(who == 'dad') {
         characterIntervalID.dad = setInterval(function() {
@@ -61,7 +61,7 @@ function socketStayAlive(who) {
                     }
                 }
             }
-        }, 1000);
+        }, 10000);
     }
 }
 

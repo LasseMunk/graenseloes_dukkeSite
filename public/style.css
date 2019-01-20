@@ -1,7 +1,7 @@
 body {
     padding: 0px; 
     margin: 0px;
-    background-color: #000000;
+    background-color:#000000;
     border: none;
 
 }
@@ -46,33 +46,22 @@ table, td, tr, video {
     margin: 0px;  
   }
 
-#snapchat {
-    display: none;
-    border-collapse: collapse; 
-    padding: 0px;
-    margin: 0px;  
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 533px;
-    height: 818px;
-}
-
-#vid_up {
+#vid_up, #vid_down{
     border-collapse: collapse; 
     padding: 0px;
     margin: 0px; 
-    overflow: hidden;
- 
+    overflow: hidden; 
 }
 
-#vid_down {
-    border-collapse: collapse;  
+#vid_cloud {
+    border-collapse: collapse; 
     padding: 0px;
     margin: 0px; 
-    overflow: hidden;
-   
+    overflow: hidden; 
+    width: 100%;
+    height: 100%;
 }
+
   
 
  
