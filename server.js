@@ -43,10 +43,12 @@ function socketStayAlive(who) {
 
     if(who == 'mom') {
         characterIntervalID.mom = setInterval(function() {
+            console.log("ping to mom");
             if(characterHashes.mom != "hash_placeholder" ) { 
                 for(var i = 0; i < clientIds.length; i++) { 
                     if(clientIds[i] == characterHashes.mom) { 
                         io.sockets.connected[characterHashes.mom].emit('message', messageObj); 
+                        
                     }
                 }
             }
@@ -54,10 +56,12 @@ function socketStayAlive(who) {
     }
     if(who == 'dad') {
         characterIntervalID.dad = setInterval(function() {
+            console.log("ping to dad");
             if(characterHashes.dad != "hash_placeholder" ) {    // test if hash is in connected ids
                 for(var i = 0; i < clientIds.length; i++) {
                     if(clientIds[i] == characterHashes.dad) {
                         io.sockets.connected[characterHashes.dad].emit('message', messageObj); 
+                        
                     }
                 }
             }
@@ -101,7 +105,7 @@ io.on('connection', function(client){
         });
 
     client.on('whatsupserver', function(data) {
-        // console.log('ping from client: ' + Math.random()); 
+        console.log('ping from: ' + data.args); 
     }); 
 });
 
@@ -117,26 +121,38 @@ function clientConnect(socket) {
 			// Write the socket.io code in the UI (or what-ever js). 
 
     clientIds.push(socket.id);
-    console.log ("connected, clients array: " + clientIds);
+    console.log ("active connections: " + clientIds.length);
 
     io.sockets.connected[socket.id].emit('yourHash', socket.id);  
 }
 
 function clientDisconnect (socket) {
     
-    if(socket == characterHashes.mom) {
+    if(socket.id == characterHashes.mom) {
         lastDisconnected = 'mom';
         characterHashes.mom = 'hash_placeholder';
+        
+        if(characterIntervalID.mom != 'interval_placeholder') {
+            clearInterval(characterIntervalID.mom);
+            characterIntervalID.mom = 'interval_placeholder';
+        }
     }
-    if(socket == characterHashes.dad) {
+    
+    if(socket.id == characterHashes.dad) {
         lastDisconnected = 'dad';
         characterHashes.dad = 'hash_placeholder';
+
+        if(characterIntervalID.dad != 'interval_placeholder') {
+            clearInterval(characterIntervalID.dad);
+            characterIntervalID.dad = 'interval_placeholder';
+        }
     }
 
     var i = clientIds.indexOf(socket);
     clientIds.splice(i, 1); // delete socket.id from clientIds array
     
-    console.log ("disconnected, clients array: " + clientIds);
+    console.log(lastDisconnected + ' disconnected');
+    console.log ("active connections: " + clientIds.length);
 }
 
 /****************

@@ -263,7 +263,7 @@ function cacheCloud() {
 function returnPing() {
 
 	var pingToServer = {
-        args: ["ping"]
+        args: myInfo.character
     };
 
 	socket.emit('whatsupserver', pingToServer); // return ping to server
