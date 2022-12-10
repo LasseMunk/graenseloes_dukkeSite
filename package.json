@@ -19,7 +19,7 @@
   "homepage": "https://github.com/LasseMunk/graenseloes_dukkeSite#readme",
   "dependencies": {
     "bufferutil": "^4.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "osc": "^2.4.0",
     "screenfull": "^4.2.1",
     "serialport": "^8.0.7",
